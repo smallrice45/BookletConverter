@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A4 轉 A6 小冊子拼版工具 (V58 虛線開關版)</title>
+    <title>A4 轉 A6 小冊子拼版工具 (V59 順序優化版)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -26,7 +26,7 @@
                 <i data-lucide="book-open" class="text-blue-600 w-6 h-6"></i>
                 <h1 class="text-xl font-bold text-slate-800">A4 轉 A6 小冊子拼版工具</h1>
             </div>
-            <div class="text-xs text-slate-500 font-mono hidden sm:block">V58: Cut Lines Toggle</div>
+            <div class="text-xs text-slate-500 font-mono hidden sm:block">V59: Reordered Split Options</div>
         </div>
     </nav>
 
@@ -58,25 +58,27 @@
                         拼版設定
                     </h2>
 
-                    <!-- 2a. Source Split Mode -->
+                    <!-- 2a. Source Split Mode (Reordered) -->
                     <div class="bg-orange-50 p-4 rounded border border-orange-100 transition-colors hover:bg-orange-100/50">
                         <label class="block text-sm font-bold text-orange-900 mb-2 flex items-center gap-2">
                             <i data-lucide="scissors" class="w-4 h-4"></i> 來源跨頁拆分 (Split)
                         </label>
                         <p class="text-[10px] text-orange-700 mb-3">決定如何從原始 PDF 的橫向跨頁中擷取單頁內容。</p>
                         <div class="flex flex-col gap-2">
+                            <!-- Right First (Now Default/Top) -->
                             <label class="flex items-center p-2 bg-white border border-orange-200 rounded cursor-pointer hover:bg-orange-50">
-                                <input type="radio" name="splitMode" value="left-first" checked class="accent-orange-600">
-                                <div class="ml-2">
-                                    <span class="text-xs font-bold text-slate-700">左頁優先 (Left First)</span>
-                                    <span class="text-[10px] text-slate-500 block">第1頁取左半，第2頁取右半... (封面在左)</span>
-                                </div>
-                            </label>
-                            <label class="flex items-center p-2 bg-white border border-orange-200 rounded cursor-pointer hover:bg-orange-50">
-                                <input type="radio" name="splitMode" value="right-first" class="accent-orange-600">
+                                <input type="radio" name="splitMode" value="right-first" checked class="accent-orange-600">
                                 <div class="ml-2">
                                     <span class="text-xs font-bold text-slate-700">右頁優先 (Right First)</span>
-                                    <span class="text-[10px] text-slate-500 block">第1頁取右半，第2頁取左半... (封面在右)</span>
+                                    <span class="text-[10px] text-slate-500 block">第1頁取右半，第2頁取左半... (常見於左翻書封面)</span>
+                                </div>
+                            </label>
+                            <!-- Left First -->
+                            <label class="flex items-center p-2 bg-white border border-orange-200 rounded cursor-pointer hover:bg-orange-50">
+                                <input type="radio" name="splitMode" value="left-first" class="accent-orange-600">
+                                <div class="ml-2">
+                                    <span class="text-xs font-bold text-slate-700">左頁優先 (Left First)</span>
+                                    <span class="text-[10px] text-slate-500 block">第1頁取左半，第2頁取右半... (常見於右翻書封面)</span>
                                 </div>
                             </label>
                         </div>
@@ -106,7 +108,7 @@
                         </div>
                     </div>
 
-                    <!-- 2c. Cut Lines Toggle (New) -->
+                    <!-- 2c. Cut Lines Toggle -->
                     <div class="bg-slate-50 p-4 rounded border border-slate-200 transition-colors hover:bg-slate-100/50">
                         <label class="flex items-center justify-between cursor-pointer group">
                             <div class="flex flex-col">
@@ -258,7 +260,7 @@
 
         splitRadios.forEach(r => r.addEventListener('change', resetUI));
         bindingRadios.forEach(r => r.addEventListener('change', resetUI));
-        cutLinesToggle.addEventListener('change', resetUI); // Toggle also triggers reset
+        cutLinesToggle.addEventListener('change', resetUI); 
 
         async function handleFile(file) {
             if (!file || file.type !== 'application/pdf') return alert('請上傳 PDF');
@@ -518,7 +520,6 @@
                         await pasteA6(page, standardizedPages[entry.bottom[1]-1], A6_W, botY);
                     }
                     
-                    // Optional Cut Lines
                     if (showCutLines) {
                         page.drawLine({ start: {x:0, y:midY}, end: {x:A4_W, y:midY}, thickness: 0.5, color: rgb(0.8,0.8,0.8), dashArray: [5,5] });
                         page.drawLine({ start: {x:A6_W, y:0}, end: {x:A6_W, y:A4_H}, thickness: 0.5, color: rgb(0.8,0.8,0.8), dashArray: [5,5] });
@@ -531,7 +532,7 @@
                 const url = URL.createObjectURL(blob);
                 
                 downloadLink.href = url;
-                downloadLink.download = `A4toA6_V58_${currentFileName}`;
+                downloadLink.download = `A4toA6_V59_${currentFileName}`;
                 downloadLink.classList.remove('hidden');
                 processingUi.classList.add('hidden');
 
