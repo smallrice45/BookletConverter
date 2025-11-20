@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A4 轉 A6 小冊子拼版工具 (V59 順序優化版)</title>
+    <title>A4 轉 A6 小冊子拼版工具 (V62 簡潔版)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -26,14 +26,13 @@
                 <i data-lucide="book-open" class="text-blue-600 w-6 h-6"></i>
                 <h1 class="text-xl font-bold text-slate-800">A4 轉 A6 小冊子拼版工具</h1>
             </div>
-            <div class="text-xs text-slate-500 font-mono hidden sm:block">V59: Reordered Split Options</div>
         </div>
     </nav>
 
     <main class="max-w-7xl mx-auto px-4 py-8 grid grid-cols-1 lg:grid-cols-12 gap-8 relative">
         
         <!-- Left Panel: Controls -->
-        <div class="lg:col-span-4 space-y-6">
+        <div class="lg:col-span-4 flex flex-col gap-6">
             <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-lg space-y-6 sticky top-24">
                 
                 <!-- 1. Upload -->
@@ -58,14 +57,14 @@
                         拼版設定
                     </h2>
 
-                    <!-- 2a. Source Split Mode (Reordered) -->
+                    <!-- 2a. Source Split Mode -->
                     <div class="bg-orange-50 p-4 rounded border border-orange-100 transition-colors hover:bg-orange-100/50">
                         <label class="block text-sm font-bold text-orange-900 mb-2 flex items-center gap-2">
                             <i data-lucide="scissors" class="w-4 h-4"></i> 來源跨頁拆分 (Split)
                         </label>
                         <p class="text-[10px] text-orange-700 mb-3">決定如何從原始 PDF 的橫向跨頁中擷取單頁內容。</p>
                         <div class="flex flex-col gap-2">
-                            <!-- Right First (Now Default/Top) -->
+                            <!-- Right First (Default) -->
                             <label class="flex items-center p-2 bg-white border border-orange-200 rounded cursor-pointer hover:bg-orange-50">
                                 <input type="radio" name="splitMode" value="right-first" checked class="accent-orange-600">
                                 <div class="ml-2">
@@ -149,6 +148,14 @@
                         <i data-lucide="download"></i> 下載 PDF
                     </a>
                     <div id="error-box" class="hidden mt-2 p-2 bg-red-50 text-red-600 text-xs rounded border border-red-100 break-words"></div>
+                </div>
+
+                <!-- Footer Info -->
+                <div class="border-t border-slate-200 pt-4 mt-4">
+                    <p class="text-[10px] text-slate-400 leading-relaxed flex gap-1">
+                        <i data-lucide="shield-check" class="w-3 h-3 shrink-0 mt-0.5"></i>
+                        <span>本工具僅在您的瀏覽器本機執行運算 (Client-side Processing)，所有 PDF 檔案皆不會上傳至任何伺服器，請安心使用。</span>
+                    </p>
                 </div>
 
             </div>
@@ -360,11 +367,10 @@
                                 <span class="text-[10px] text-slate-400 w-4">上</span>
                                 ${badge(row.top[0], false)}
                             </div>
-                            ${!row.botIsDiscard ? `
                             <div class="flex gap-1 justify-center items-center">
                                 <span class="text-[10px] text-slate-400 w-4">下</span>
-                                ${badge(row.bottom[0], false)}
-                            </div>` : ''}
+                                ${!row.botIsDiscard ? badge(row.bottom[0], false) : '<span class="text-slate-300 font-bold">-</span>'}
+                            </div>
                         </div>
                     </td>
                     <td class="text-center">
@@ -373,11 +379,10 @@
                                 <span class="text-[10px] text-slate-400 w-4">上</span>
                                 ${badge(row.top[1], false)}
                             </div>
-                            ${!row.botIsDiscard ? `
                             <div class="flex gap-1 justify-center items-center">
                                 <span class="text-[10px] text-slate-400 w-4">下</span>
-                                ${badge(row.bottom[1], false)}
-                            </div>` : ''}
+                                ${!row.botIsDiscard ? badge(row.bottom[1], false) : '<span class="text-slate-300 font-bold">-</span>'}
+                            </div>
                         </div>
                     </td>
                 </tr>`;
@@ -532,7 +537,7 @@
                 const url = URL.createObjectURL(blob);
                 
                 downloadLink.href = url;
-                downloadLink.download = `A4toA6_V59_${currentFileName}`;
+                downloadLink.download = `A4toA6_V62_${currentFileName}`;
                 downloadLink.classList.remove('hidden');
                 processingUi.classList.add('hidden');
 
