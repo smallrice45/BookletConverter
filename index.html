@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A4 轉 A6 小冊子拼版工具 (V65 裝訂指引優化版)</title>
+    <title>A4 轉 A6 小冊子拼版工具 (V66 指引優化版)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -27,7 +27,7 @@
                 <i data-lucide="book-open" class="text-blue-600 w-6 h-6"></i>
                 <h1 class="text-xl font-bold text-slate-800">A4 轉 A6 小冊子拼版工具</h1>
             </div>
-            <div class="text-xs text-slate-500 font-mono hidden sm:block">V65: Binding Instruction</div>
+            <div class="text-xs text-slate-500 font-mono hidden sm:block">V66: Refined Instructions</div>
         </div>
     </nav>
 
@@ -184,7 +184,7 @@
                             <div class="bg-slate-200 text-slate-600 w-5 h-5 rounded-full flex items-center justify-center shrink-0 font-bold text-[10px] mt-0.5">6</div>
                             <div>
                                 <p class="font-bold text-slate-700 mb-1">對折與裝訂</p>
-                                <p>將整疊紙張<strong>先沿著中央虛線對折</strong>，最後使用<strong>訂書機</strong>（建議可旋轉式）或<strong>長尾夾</strong>固定於中線處，即完成 A6 小冊子。</p>
+                                <p>將整疊紙張<strong>先沿著左右兩半的中央虛線對折</strong>，最後使用<strong>訂書機</strong>（建議可旋轉式）或<strong>長尾夾</strong>固定於中線處，即完成 A6 小冊子。</p>
                             </div>
                         </div>
                     </div>
@@ -580,7 +580,7 @@
                 const url = URL.createObjectURL(blob);
                 
                 downloadLink.href = url;
-                downloadLink.download = `A4toA6_V65_${currentFileName}`;
+                downloadLink.download = `A4toA6_V66_${currentFileName}`;
                 downloadLink.classList.remove('hidden');
                 // Show Instructions
                 instructionsPanel.classList.remove('hidden');
@@ -598,4 +598,3 @@
     </script>
 </body>
 </html>
-
